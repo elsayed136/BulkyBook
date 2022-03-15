@@ -6,15 +6,16 @@ $(document).ready(function () {
 
 function loadDataTable() {
     dataTable = $("#tblData").DataTable({
-        "ajax": {
+        responsive: true,
+        ajax: {
             "url": "/Admin/Product/GetAll"
         },
-        "columns": [
-            { "data": "title", "width": "15%" },
-            { "data": "isbn", "width": "15%" },
-            { "data": "price", "width": "15%" },
-            { "data": "author", "width": "15%" },
-            { "data": "category.name", "width": "15%" },
+        columns: [
+            { "data": "title" },
+            { "data": "isbn" },
+            { "data": "price" },
+            { "data": "author" },
+            { "data": "category.name" },
             {
                 "data": "id",
                 "render": function (data) {
@@ -30,8 +31,8 @@ function loadDataTable() {
                             </a>
                         </div>
                         `
-                }, "width": "15%"
+                }
             },
-        ]
+        ],
     });
 }
