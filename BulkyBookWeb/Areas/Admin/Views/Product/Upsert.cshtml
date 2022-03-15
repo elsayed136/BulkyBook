@@ -112,6 +112,9 @@
     <partial name="_ValidationScriptsPartial" />
     }
 <script type="text/javascript">
+    tinymce.init({
+          selector: 'textarea',
+        });
     function ValidateInput(){
         // image does not uploaded
         if(document.getElementById("uploadBox").value==""){
