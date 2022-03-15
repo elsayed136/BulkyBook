@@ -18,8 +18,7 @@ namespace BulkyBookWeb.Areas.Admin.Controllers
         }
         public IActionResult Index()
         {
-            IEnumerable<Product> productList = _unitOfWork.Product.GetAll();
-            return View(productList);
+            return View();
         }
         // Upsert(Update/Create)
         // GET Product/Upsert
@@ -73,12 +72,20 @@ namespace BulkyBookWeb.Areas.Admin.Controllers
                 obj.Product.ImageUrl = @"\images\products\" + fileName + extension;
             }
 
-            if(obj.Product.Id == 0) _unitOfWork.Product.Add(obj.Product);
+            if (obj.Product.Id == 0) _unitOfWork.Product.Add(obj.Product);
 
             _unitOfWork.Save();
             TempData["success"] = "Product Created successfully";
             return RedirectToAction("Index");
         }
+        #region API CALLS
+        [HttpGet]
+        public IActionResult GetAll()
+        {
+            var productList = _unitOfWork.Product.GetAll();
+            return Json(new { data = productList });
+        }
 
+        #endregion
     }
 }
