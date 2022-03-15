@@ -65,7 +65,7 @@ namespace BulkyBookWeb.Areas.Admin.Controllers
                 // there is an existing img in db
                 if (obj.Product.ImageUrl != null)
                 {
-                    var oldImagePath = Path.Combine(wwwRootPath, obj.Product.ImageUrl.Trim('\\'));
+                    var oldImagePath = Path.Combine(wwwRootPath, obj.Product.ImageUrl.TrimStart('\\'));
 
                     if (System.IO.File.Exists(oldImagePath)) System.IO.File.Delete(oldImagePath);
                 }
@@ -96,6 +96,25 @@ namespace BulkyBookWeb.Areas.Admin.Controllers
         {
             var productList = _unitOfWork.Product.GetAll(includeProperties: "Category,CoverType");
             return Json(new { data = productList });
+        }
+        [HttpDelete]
+        public IActionResult Delete(int? id)
+        {
+            Product obj = _unitOfWork.Product.GetFirstOrDefault(p => p.Id == id);
+
+            if (obj == null) return Json(new { success = false, message = "Error while deleting." });
+
+            if(obj.ImageUrl != null)
+            {
+                var imgPath = Path.Combine(_hostEnvironment.WebRootPath, obj.ImageUrl.TrimStart('\\'));
+                if (System.IO.File.Exists(imgPath))
+                {
+                    System.IO.File.Delete(imgPath);
+                }
+            }
+            _unitOfWork.Product.Remove(obj);
+            _unitOfWork.Save();
+            return Json(new { success = true, message = "Delete Successful" });
         }
 
         #endregion

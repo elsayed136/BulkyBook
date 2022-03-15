@@ -35,8 +35,16 @@
                     <input type="file" id="uploadBox" name="file" class="form-control" />
                 </div>
             </div>
-            <div class="col-md-6">
-                <img src="@Model.Product.ImageUrl" class="img-thumbnail" />
+            <div class="d-flex justify-content-center col-md-6">
+
+                @if (@Model.Product.ImageUrl != null)
+                {
+                    <img src="@Model.Product.ImageUrl" class="img-thumbnail" />
+                }
+                else
+                {
+                    <i class="bi bi-image" style="font-size:13.5rem"></i>
+                }
             </div>
         </div>
 
@@ -94,7 +102,7 @@
             {
                 <button type="submit" onclick="return ValidateInput()" class="btn btn-primary" style="width:150px">Create</button>
             }
-            <a asp-controller="CoverType" asp-action="Index" class="btn btn-secondary" style="width:150px">Back To List</a>
+            <a asp-controller="Product" asp-action="Index" class="btn btn-secondary" style="width:150px">Back To List</a>
         </div>
     </div>
 </form>
