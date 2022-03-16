@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace BulkyBook.Models.ViewModels
+namespace BulkyBook.Models
 {
     public class ShoppingCart
     {
