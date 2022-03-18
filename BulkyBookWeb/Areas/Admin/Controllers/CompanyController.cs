@@ -46,10 +46,13 @@ namespace BulkyBookWeb.Areas.Admin.Controllers
                 _unitOfWork.Company.Add(company);
                 TempData["success"] = "Company created successfully";
             }
-            // update
-            _unitOfWork.Company.Update(company);
-            TempData["success"] = "Company updated successfully";
-
+            else
+            {
+                // update
+                _unitOfWork.Company.Update(company);
+                TempData["success"] = "Company updated successfully";
+            }
+            
             _unitOfWork.Save();
             return RedirectToAction("Index");
         }
@@ -62,7 +65,7 @@ namespace BulkyBookWeb.Areas.Admin.Controllers
             return Json(new { data = companies });
         }
 
-        [HttpPost]
+        [HttpDelete]
         public IActionResult Delete(int id)
         {
             Company company = _unitOfWork.Company.GetFirstOrDefault(x => x.Id == id);
